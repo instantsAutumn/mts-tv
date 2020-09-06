@@ -13,17 +13,19 @@ export class ChannelsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   channels: IChannel[] = [];
   total: string;
+  isMore = true;
 
   ngOnInit(): void {
-    this.channelsStoreService.getChannels();
-
     this.subscriptions.push(
-      this.channelsStoreService.channels.subscribe((channels) => {
-        this.channels = channels;
-      }),
-      this.channelsStoreService.subjectTotal.subscribe((total) => {
-        this.total = total;
-      })
+      this.channelsStoreService
+        .getChannels()
+        .subscribe((channels) => (this.channels = channels)),
+      this.channelsStoreService
+        .getTotal()
+        .subscribe((total) => (this.total = total)),
+      this.channelsStoreService
+        .isMore()
+        .subscribe((isMore) => (this.isMore = isMore))
     );
   }
 
@@ -31,5 +33,9 @@ export class ChannelsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
     });
+  }
+
+  loadMore(): void {
+    this.channelsStoreService.loadMore();
   }
 }

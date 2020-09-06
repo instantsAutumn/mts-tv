@@ -3,5 +3,7 @@
   <div class="channels__grid">
     <app-channel *ngFor="let channel of channels" class="channels__item" [item]="channel"></app-channel>
   </div>
-
+  <footer *ngIf="isMore" class="channels__footer">
+    <button class="channels__button" (click)="loadMore()">Ещё</button>
+  </footer>
 </div>

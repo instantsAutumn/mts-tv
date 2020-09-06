@@ -4,6 +4,7 @@
     grid-template-columns: repeat(2, 1fr);
     column-gap: 16px;
     row-gap: 24px;
+    margin-bottom: 20px;
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(4, 1fr);
@@ -19,5 +20,10 @@
     font-weight: 300;
     margin-bottom: 20px;
     color: #fff;
+  }
+
+  &__footer {
+    text-align: center;
+    margin-bottom: 20px;
   }
 }

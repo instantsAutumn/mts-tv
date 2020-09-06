@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import IGenre from './interfaces/genre';
 import { IGenresMapValue } from './interfaces/genres-map';
 import { ChannelsStoreService } from './services/channels-store/channels-store.service';
 
@@ -9,24 +8,33 @@ import { ChannelsStoreService } from './services/channels-store/channels-store.s
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'mts-tv';
   genres: Array<IGenresMapValue>;
   channelsSubscription: Subscription;
+  subscriptions: Subscription[] = [];
+  constructor(private channelsStoreService: ChannelsStoreService) {}
 
-  constructor(private channelsStoreService: ChannelsStoreService) {
-    this.channelsSubscription = this.channelsStoreService.subjectGenres.subscribe(
-      (genres) => {
-        this.genres = Object.values(genres);
-      }
+  ngOnInit(): void {
+    this.channelsStoreService.loadChannels();
+    this.subscriptions.push(
+      this.channelsStoreService.getGenres().subscribe((genres) => {
+        this.genres = genres;
+      })
     );
   }
 
   onGenreChange(value): void {
-    this.channelsStoreService.subjectGenreFilter.next(value);
+    this.channelsStoreService.setGenre(value);
   }
 
   onSortChange(value): void {
-    this.channelsStoreService.subjectSortFilter.next(value);
+    this.channelsStoreService.setSort(value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }
