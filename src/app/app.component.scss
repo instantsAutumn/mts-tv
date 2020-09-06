@@ -1,0 +1,47 @@
+.container {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.header {
+  padding-top: 45px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #546479;
+  margin-bottom: 22px;
+}
+
+.tabs {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  &__link {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    padding: 17px 40px;
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+      color: #ba9d5a;
+    }
+
+    &.active {
+      font-weight: 700;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background-color: #ba9d5a;
+      }
+    }
+  }
+}

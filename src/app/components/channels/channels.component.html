@@ -1,0 +1,7 @@
+<div class="channels">
+  <div class="channels__total">{{total}} каналов</div>
+  <div class="channels__grid">
+    <app-channel *ngFor="let channel of channels" class="channels__item" [item]="channel"></app-channel>
+  </div>
+
+</div>
